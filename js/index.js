@@ -31,11 +31,20 @@ const signableTransactions = [
 ]
 
 async function trigger() {
-    const signer = new RawSigner(keypair);
+    const responsesElement = document.getElementById('responses');
+    responsesElement.innerHTML = "";
+    const signer = new RawSigner(keypair, provider);
 
-    for (const signableTransaction of signableTransactions) {
+    for (let i=0; i<signableTransactions.length; ++i) {
+        const signableTransaction = signableTransactions[i];
         const response = await signer.signAndExecuteTransactionWithRequestType(signableTransaction);
-        console.log("RESPONSE", response)
+        
+        const responseElement = document.createElement("DIV");
+        responseElement.innerHTML = `<div>
+            <h3>Response #${i + 1}</h3>
+            <pre>${JSON.stringify(response, null, 4)}</pre>
+        </div>`
+        responsesElement.append(responseElement)
     }
 
     getBalance();
