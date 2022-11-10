@@ -3,6 +3,7 @@ const nacl = require('tweetnacl');
 const { derivePath } = require('ed25519-hd-key');
 const {
     Ed25519Keypair, 
+    // LocalTxnDataSerializer,
     JsonRpcProvider, 
     Network, 
     RawSigner 
@@ -33,6 +34,7 @@ const signableTransactions = [
 async function trigger() {
     const responsesElement = document.getElementById('responses');
     responsesElement.innerHTML = "";
+    // const signer = new RawSigner(keypair, provider, new LocalTxnDataSerializer(provider));
     const signer = new RawSigner(keypair, provider);
 
     for (let i=0; i<signableTransactions.length; ++i) {
